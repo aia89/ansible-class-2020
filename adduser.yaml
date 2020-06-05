@@ -1,10 +1,12 @@
 --- 
 - 
+  hosts: localhost
+  name: "First Playbook"
+- 
   become: true
   become_method: sudo
   connection: true
   gather_facts: false
-  hosts: test
   tasks: 
     - 
       name: "add a new user"
@@ -14,3 +16,4 @@
       username: aiok
     - 
       homedir: "/home/{{aiok}}"
+
