@@ -1,0 +1,14 @@
+--- 
+- 
+  hosts: localhost
+  name: "First Playbook"
+- 
+  name: "Install http and php etc"
+  with_items: 
+    - httpd
+    - php
+    - php-mysql
+    - git
+    - libsemanage-python
+    - libselinux-python
+  yum: "name={{ item }} state=present"
