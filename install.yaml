@@ -1,8 +1,6 @@
 --- 
 - 
   hosts: localhost
-  name: "First Playbook"
-- 
   name: "Install http and php etc"
   with_items: 
     - httpd
