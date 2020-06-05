@@ -1,0 +1,16 @@
+--- 
+- 
+  become: true
+  become_method: sudo
+  connection: true
+  gather_facts: false
+  hosts: test
+  tasks: 
+    - 
+      name: "add a new user"
+      user: "name={{aiok}} state=present home={{/home/aiok}}"
+  vars: 
+    - 
+      username: aiok
+    - 
+      homedir: "/home/{{aiok}}"
