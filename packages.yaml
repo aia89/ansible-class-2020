@@ -1,0 +1,18 @@
+---
+- name: installs packages Playbook
+  become: yes
+  become_method: sudo
+  user: centos
+  hosts: all
+  tasks: 
+  - name: Install telnet
+    package:
+      name: "{{item}}"
+      state: present
+    with_items:
+    - epel-release
+    - wget
+    - httpd
+    - vsftpd
+    - vim 
+    - cowsay
