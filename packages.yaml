@@ -13,6 +13,12 @@
     - epel-release
     - wget
     - httpd
-    - vsftpd
-    - vim 
-    - cowsay
+    - httpd
+    - php
+    - php-mysql
+    - git
+    - libsemanage-python
+    - libselinux-python
+    - bzip2
+ 
+
