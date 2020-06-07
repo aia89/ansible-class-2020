@@ -1,12 +1,60 @@
 --- 
 - 
-  hosts: localhost
-  name: "Install http and php etc"
-  with_items: 
-    - httpd
-    - php
-    - php-mysql
-    - git
-    - libsemanage-python
-    - libselinux-python
-  yum: "name={{ item }} state=present"
+  become: true
+  become_method: sudo
+  hosts: all
+  user: centos
+  name: "Installs wordpress"
+  tasks: 
+    - name: installation
+      package: 
+        name: "{{ item }}"
+        state: present
+      with_items: 
+        - epel-release
+        - httpd
+        - http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+        
+    - name: enable remi-php73
+      shell: "yum-config-manager --enable remi-php73"   
+
+    - name: Install php
+      package: 
+        name: "{{ item }}"
+        state: latest
+      with_items:
+        - php
+        - mysql
+        - php-mysql 
+
+    - name: "Get the wordpress url"
+      get_url: 
+        url: https://www.wordpress.org/latest.tar.gz
+        dest: /var/www/html/
+        
+
+    - name: Unzip wordpress zip file
+      unarchive: 
+        src: /var/www/html/wordpress-5.4.1.tar.gz
+        dest: /var/www/html/
+        remote_src: yes    
+
+    - name: Move wordpress files to html folder
+      shell: "mv /var/www/html/wordpress/* /var/www/html 2>/dev/null"
+      become: yes
+      become_method: sudo
+      ignore_errors: yes
+        
+      
+    -  name: "restart apache"
+       become: true
+       become_method: sudo
+       name: "Restart httpd"
+       systemd: 
+         enabled: true
+         name: httpd
+         state: restarted
+         
+  
+
+  
