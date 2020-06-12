@@ -1684,10 +1684,10 @@ class Ec2Inventory(object):
         if pretty:
             return json.dumps(data, sort_keys=True, indent=2, default=self._json_serial)
         else:
+            
             return json.dumps(data, default=self._json_serial)
 
 
 if __name__ == '__main__':
     # Run the script
     Ec2Inventory()
-    
